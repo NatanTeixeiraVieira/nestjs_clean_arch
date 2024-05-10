@@ -6,7 +6,7 @@ import { ConfigService } from '@nestjs/config';
 export class EnvConfigService implements EnvConfig {
   constructor(private readonly configService: ConfigService) {}
 
-  getAllPort(): number {
+  getPort(): number {
     return +this.configService.get<number>('PORT');
   }
 

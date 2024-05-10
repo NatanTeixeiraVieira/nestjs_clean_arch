@@ -1,4 +1,4 @@
 export interface EnvConfig {
-  getAllPort(): number;
+  getPort(): number;
   getNodeEnv(): string;
 }
