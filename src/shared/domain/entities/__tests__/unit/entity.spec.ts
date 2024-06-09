@@ -21,7 +21,7 @@ describe('Entity unit tests', () => {
     const id = 1;
     const entity = new StubEntity(props, id);
 
-    expect(entity.toObject()).toStrictEqual({
+    expect(entity.toJSON()).toStrictEqual({
       id,
       ...props,
     });
