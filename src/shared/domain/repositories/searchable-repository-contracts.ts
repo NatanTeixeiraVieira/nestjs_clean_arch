@@ -7,7 +7,7 @@ export type SearchProps<Filter = string> = {
   page?: number;
   perPage?: number;
   sort?: string | null;
-  sortDir: SortDirection;
+  sortDir?: SortDirection | null;
   filter?: Filter | null;
 };
 
