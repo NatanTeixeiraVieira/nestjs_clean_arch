@@ -1,0 +1,17 @@
+version: '3.1'
+services:
+  db:
+    build: .
+    container_name: api-db
+    restart: always
+    tty: true
+    #Left is the machine port and right is the container port
+    ports:
+      - '5432:5432'
+    # Get the data stored by postgres into container in the path in colon right-side and put in left-side path in the application
+    volumes:
+      - .docker/dbdata:/var/lib/postgresql/data
+    # When the user is not defined, it's created with default user: postgres
+    environment:
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=nestjs-clean-arch
