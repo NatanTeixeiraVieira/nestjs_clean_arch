@@ -1,13 +1,12 @@
 import { UserRepository } from '@/users/domain/repositories/user.repository';
 import { UserOutput, UserOutputMapper } from '../dtos/user-output';
 import { UseCase as DefaultUseCase } from '@/shared/application/usecases/use-case';
-import { BadRequestError } from '@/shared/application/errors/bad-request-error';
 import { InvalidPasswordError } from '@/shared/application/errors/invalid-password-error';
 import { HashProvider } from '@/shared/application/providers/hash-provider';
 
 export namespace UpdatePassword {
   export type Input = {
-    id: number;
+    id: string;
     password: string;
     oldPassword: string;
   };
@@ -21,7 +20,7 @@ export namespace UpdatePassword {
     ) {}
 
     async execute(input: Input): Promise<Output> {
-      const entity = await this.userRepository.findById(input.id);
+      const entity = await this.userRepository.findById(+input.id);
 
       if (!input.password || !input.oldPassword)
         throw new InvalidPasswordError(

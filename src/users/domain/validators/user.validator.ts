@@ -16,24 +16,24 @@ type UserProps = {
 };
 
 export class UserRules {
-  @MaxLength(255)
-  @IsString()
-  @IsNotEmpty()
+  // @MaxLength(255)
+  // @IsString()
+  // @IsNotEmpty()
   name: string;
 
-  @MaxLength(255)
-  @IsString()
-  @IsEmail()
-  @IsNotEmpty()
+  // @MaxLength(255)
+  // @IsString()
+  // @IsEmail()
+  // @IsNotEmpty()
   email: string;
 
-  @MaxLength(100)
-  @IsString()
-  @IsNotEmpty()
+  // @MaxLength(100)
+  // @IsString()
+  // @IsNotEmpty()
   password: string;
 
-  @IsDate()
-  @IsOptional()
+  // @IsDate()
+  // @IsOptional()
   createdAt?: Date;
 
   constructor({ email, name, password, createdAt }: UserProps) {

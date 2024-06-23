@@ -4,7 +4,7 @@ import { UseCase as DefaultUseCase } from '@/shared/application/usecases/use-cas
 
 export namespace GetUser {
   export type Input = {
-    id: number;
+    id: string;
   };
 
   export type Output = UserOutput;
@@ -13,7 +13,7 @@ export namespace GetUser {
     constructor(private readonly userRepository: UserRepository.Repository) {}
 
     async execute(input: Input): Promise<Output> {
-      const entity = await this.userRepository.findById(input.id);
+      const entity = await this.userRepository.findById(+input.id);
 
       return UserOutputMapper.toOutput(entity);
     }

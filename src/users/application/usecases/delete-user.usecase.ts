@@ -3,7 +3,7 @@ import { UseCase as DefaultUseCase } from '@/shared/application/usecases/use-cas
 
 export namespace DeleteUser {
   export type Input = {
-    id: number;
+    id: string;
   };
 
   export type Output = void;
@@ -12,7 +12,7 @@ export namespace DeleteUser {
     constructor(private readonly userRepository: UserRepository.Repository) {}
 
     async execute(input: Input): Promise<Output> {
-      await this.userRepository.delete(input.id);
+      await this.userRepository.delete(+input.id);
     }
   }
 }
