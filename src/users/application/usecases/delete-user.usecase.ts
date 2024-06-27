@@ -12,7 +12,7 @@ export namespace DeleteUser {
     constructor(private readonly userRepository: UserRepository.Repository) {}
 
     async execute(input: Input): Promise<Output> {
-      await this.userRepository.delete(+input.id);
+      await this.userRepository.delete(input.id);
     }
   }
 }

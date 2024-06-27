@@ -12,7 +12,7 @@ export type UserProps = {
 export class User extends Entity<UserProps> {
   constructor(
     public readonly props: UserProps,
-    id?: number,
+    id?: string,
   ) {
     User.validate(props);
     super(props, id);

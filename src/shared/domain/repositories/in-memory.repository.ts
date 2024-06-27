@@ -6,12 +6,11 @@ export abstract class InMemoryRepository<E extends Entity>
 {
   items: E[] = [];
 
-  async insert(entity: E): Promise<E> {
+  async insert(entity: E): Promise<void> {
     this.items.push(entity);
-    return entity;
   }
 
-  async findById(id: number): Promise<E> {
+  async findById(id: string): Promise<E> {
     return this._get(id);
   }
 
@@ -19,20 +18,18 @@ export abstract class InMemoryRepository<E extends Entity>
     return this.items;
   }
 
-  async update(entity: E): Promise<E> {
+  async update(entity: E): Promise<void> {
     await this._get(entity.id);
     const index = this.items.findIndex((item) => item.id === entity.id);
     this.items[index] = entity;
-
-    return entity;
   }
 
-  async delete(id: number): Promise<void> {
+  async delete(id: string): Promise<void> {
     const index = this.items.findIndex((item) => item.id === id);
     this.items.splice(index, 1);
   }
 
-  protected async _get(id: number): Promise<E> {
+  protected async _get(id: string): Promise<E> {
     const entity = this.items.find((item) => item.id === id);
     if (!entity) throw new Error('Entity not found');
     return entity;

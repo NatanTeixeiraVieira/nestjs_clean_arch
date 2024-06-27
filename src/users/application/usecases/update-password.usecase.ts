@@ -20,7 +20,7 @@ export namespace UpdatePassword {
     ) {}
 
     async execute(input: Input): Promise<Output> {
-      const entity = await this.userRepository.findById(+input.id);
+      const entity = await this.userRepository.findById(input.id);
 
       if (!input.password || !input.oldPassword)
         throw new InvalidPasswordError(

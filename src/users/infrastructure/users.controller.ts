@@ -24,6 +24,12 @@ import { GetUser } from '../application/usecases/get-user.usecase';
 import { SigninDto } from './dtos/signin.dto';
 import { ListUsersDto } from './dtos/list-users.dto';
 import { UpdatePasswordDto } from './dtos/update-password.dto';
+import { UserOutput } from '../application/dtos/user-output';
+import {
+  UserCollectionPresenter,
+  UserPresenter,
+} from './presenters/user.presenter';
+import { create } from 'domain';
 
 @Controller('users')
 export class UsersController {
@@ -48,20 +54,31 @@ export class UsersController {
   @Inject(ListUsers.UseCase)
   private listUsersUseCase: ListUsers.UseCase;
 
+  private static userToResponse(output: UserOutput) {
+    return new UserPresenter(output);
+  }
+
+  private static listUsersToResponse(output: ListUsers.Output) {
+    return new UserCollectionPresenter(output);
+  }
+
   @HttpCode(HttpStatus.OK)
   @Post()
   async create(@Body() signupDto: SignupDto) {
-    return this.signupUseCase.execute(signupDto);
+    const output = await this.signupUseCase.execute(signupDto);
+    return UsersController.userToResponse(output);
   }
 
   @Post(`login`)
   async login(@Body() signupDto: SigninDto) {
-    return this.signinUseCase.execute(signupDto);
+    const output = await this.signinUseCase.execute(signupDto);
+    return UsersController.userToResponse(output);
   }
 
   @Get()
   async search(@Query() searchParams: ListUsersDto) {
-    return this.listUsersUseCase.execute(searchParams);
+    const output = await this.listUsersUseCase.execute(searchParams);
+    return UsersController.listUsersToResponse(output);
   }
 
   @Get(':id')
@@ -71,7 +88,11 @@ export class UsersController {
 
   @Put(':id')
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.updateUserUseCase.execute({ id, ...updateUserDto });
+    const output = await this.updateUserUseCase.execute({
+      id,
+      ...updateUserDto,
+    });
+    return UsersController.userToResponse(output);
   }
 
   @Patch(':id')
@@ -79,7 +100,11 @@ export class UsersController {
     @Param('id') id: string,
     @Body() updatePasswordDto: UpdatePasswordDto,
   ) {
-    return this.updatePasswordUseCase.execute({ id, ...updatePasswordDto });
+    const output = await this.updatePasswordUseCase.execute({
+      id,
+      ...updatePasswordDto,
+    });
+    return UsersController.userToResponse(output);
   }
 
   @HttpCode(HttpStatus.NO_CONTENT)

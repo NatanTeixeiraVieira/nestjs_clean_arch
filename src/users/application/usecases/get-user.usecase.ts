@@ -13,7 +13,7 @@ export namespace GetUser {
     constructor(private readonly userRepository: UserRepository.Repository) {}
 
     async execute(input: Input): Promise<Output> {
-      const entity = await this.userRepository.findById(+input.id);
+      const entity = await this.userRepository.findById(input.id);
 
       return UserOutputMapper.toOutput(entity);
     }

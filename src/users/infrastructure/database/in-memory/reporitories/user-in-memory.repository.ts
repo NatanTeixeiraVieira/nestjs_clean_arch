@@ -1,5 +1,5 @@
 import { ConflictError } from '@/shared/domain/errors/conflict-error';
-import { NotFountError } from '@/shared/domain/errors/not-found-error';
+import { NotFoundError } from '@/shared/domain/errors/not-found-error';
 import { InMemorySearchableRepository } from '@/shared/domain/repositories/in-memory-searchable.repository';
 import { SortDirection } from '@/shared/domain/repositories/searchable-repository-contracts';
 import { User } from '@/users/domain/entities/user.entity';
@@ -15,7 +15,7 @@ export class UserInMemoryRepository
     const entity = this.items.find((item) => item.email === email);
 
     if (!entity)
-      throw new NotFountError(`Entity not found using email ${email}`);
+      throw new NotFoundError(`Entity not found using email ${email}`);
 
     return entity;
   }
