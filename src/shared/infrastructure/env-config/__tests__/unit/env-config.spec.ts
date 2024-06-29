@@ -3,7 +3,7 @@ import { EnvConfigService } from '../../env-config.service';
 import { EnvConfigModule } from '../../env-config.module';
 
 describe('EnvConfigService unit tests', () => {
-  let sut: EnvConfigService; // System under test
+  let sut: EnvConfigService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -18,11 +18,19 @@ describe('EnvConfigService unit tests', () => {
     expect(sut).toBeDefined();
   });
 
-  it('should return variable PORT', () => {
-    expect(sut.getPort()).toBe(3333);
+  it('should get port number', () => {
+    expect(sut.getPort()).toBe(3000);
   });
 
-  it('should return variable NODE_ENV', () => {
+  it('should get node env', () => {
     expect(sut.getNodeEnv()).toBe('test');
+  });
+
+  it('should get JWT secret', () => {
+    expect(sut.getJwtSecret()).toBe('fake_secret');
+  });
+
+  it('should get JWT Expires In Seconds', () => {
+    expect(sut.getJwtExpiresInSeconds()).toBe(86400);
   });
 });
