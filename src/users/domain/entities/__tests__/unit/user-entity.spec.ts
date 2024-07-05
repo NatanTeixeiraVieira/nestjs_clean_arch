@@ -1,21 +1,18 @@
-import { faker } from '@faker-js/faker';
 import { User, UserProps } from '../../user.entity';
+import { UserDataBuilder } from '@/users/domain/testing/helpers/user-data-builder';
 
 describe('UserEntity unit tests', () => {
   let props: UserProps;
   let sut: User;
 
   beforeEach(() => {
-    props = {
-      name: faker.person.fullName(),
-      email: faker.internet.email(),
-      password: faker.internet.password(),
-    };
-
+    User.validate = jest.fn();
+    props = UserDataBuilder();
     sut = new User(props);
   });
 
   it('should work constructor method', () => {
+    expect(User.validate).toHaveBeenCalled();
     expect(sut.props.name).toEqual(props.name);
     expect(sut.props.email).toEqual(props.email);
     expect(sut.props.password).toEqual(props.password);
@@ -59,11 +56,13 @@ describe('UserEntity unit tests', () => {
 
   it('should update user name', () => {
     sut.update('other name');
+    expect(User.validate).toHaveBeenCalled();
     expect(sut.props.name).toEqual('other name');
   });
 
   it('should update user password', () => {
     sut.updatePassword('other password');
+    expect(User.validate).toHaveBeenCalled();
     expect(sut.props.password).toEqual('other password');
   });
 });
