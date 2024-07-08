@@ -15,7 +15,7 @@ export class UserInMemoryRepository
     const entity = this.items.find((item) => item.email === email);
 
     if (!entity)
-      throw new NotFoundError(`Entity not found using email ${email}`);
+      throw new NotFoundError(`Entity was not found using email ${email}`);
 
     return entity;
   }
@@ -44,6 +44,6 @@ export class UserInMemoryRepository
   ): Promise<User[]> {
     return !sort
       ? super.applySort(items, 'createdAt', 'desc')
-      : super.applySort(items, 'createdAt', sortDir);
+      : super.applySort(items, sort, sortDir);
   }
 }
