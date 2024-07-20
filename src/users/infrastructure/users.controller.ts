@@ -37,6 +37,7 @@ import {
   getSchemaPath,
 } from '@nestjs/swagger';
 import { AuthGuard } from '@/auth/infrastructure/auth.guard';
+import { AuthService } from '@/auth/infrastructure/auth.service';
 
 @ApiTags('users')
 @Controller('users')
@@ -49,6 +50,9 @@ export class UsersController {
 
   @Inject(UpdateUser.UseCase)
   private updateUserUseCase: UpdateUser.UseCase;
+
+  @Inject(AuthService)
+  private authService: AuthService;
 
   @Inject(UpdatePassword.UseCase)
   private updatePasswordUseCase: UpdatePassword.UseCase;
@@ -78,7 +82,6 @@ export class UsersController {
     status: 422,
     description: 'Corpo da requisição com dados inválidos',
   })
-  @HttpCode(HttpStatus.OK)
   @Post()
   async create(@Body() signupDto: SignupDto) {
     const output = await this.signupUseCase.execute(signupDto);
@@ -108,10 +111,11 @@ export class UsersController {
     status: 400,
     description: 'Credenciais inválidas',
   })
+  @HttpCode(HttpStatus.OK)
   @Post(`login`)
   async login(@Body() signupDto: SigninDto) {
     const output = await this.signinUseCase.execute(signupDto);
-    return UsersController.userToResponse(output);
+    return this.authService.generateJwt(output.id);
   }
 
   @ApiBearerAuth()
