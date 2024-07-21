@@ -7,7 +7,7 @@ jobs:
     # Definir os passos necessários para baixar o app e rodar os testes
     steps:
       - uses: actions/checkout@v3 # Baixar o código do app ubuntu
-      - uses: actions/sutup-node@v3 # Configurar o node
+      - uses: actions/setup-node@v3 # Configurar o node
         with:
           node-version: 18
           cache: 'npm'
