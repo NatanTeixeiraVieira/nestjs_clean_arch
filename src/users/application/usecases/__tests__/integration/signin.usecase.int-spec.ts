@@ -11,7 +11,7 @@ import { UserDataBuilder } from '@/users/domain/testing/helpers/user-data-builde
 import { NotFoundError } from '@/shared/domain/errors/not-found-error';
 import { InvalidPasswordError } from '@/shared/application/errors/invalid-password-error';
 import { Signin } from '../../signin.usecase';
-import { InvalidCredentilsError } from '@/shared/application/errors/invalid-credentials-error';
+import { InvalidCredentialsError } from '@/shared/application/errors/invalid-credentials-error';
 import { BadRequestError } from '@/shared/application/errors/bad-request-error';
 
 describe('SigninUseCase integration tests', () => {
@@ -65,7 +65,7 @@ describe('SigninUseCase integration tests', () => {
         email: 'a@a.com',
         password: 'fake',
       }),
-    ).rejects.toBeInstanceOf(InvalidCredentilsError);
+    ).rejects.toBeInstanceOf(InvalidCredentialsError);
   });
 
   it('should throw error when email is not provided', async () => {

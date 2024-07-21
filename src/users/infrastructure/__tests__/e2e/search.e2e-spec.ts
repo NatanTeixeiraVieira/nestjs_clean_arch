@@ -113,6 +113,7 @@ describe('UsersController e2e tests', () => {
           }),
         ),
       );
+      await prismaService.user.deleteMany();
       await prismaService.user.createMany({
         data: entities.map((item) => item.toJSON()),
       });
@@ -150,6 +151,16 @@ describe('UsersController e2e tests', () => {
 
       expect(res.body.error).toBe('Unprocessable Entity');
       expect(res.body.message).toEqual(['property fakeId should not exist']);
+    });
+
+    it('should return a error with 401 code when the request is not authorized', async () => {
+      const res = await request(app.getHttpServer())
+        .get('/users?fakeId=10')
+        .expect(401)
+        .expect({
+          statusCode: 401,
+          message: 'Unauthorized',
+        });
     });
   });
 });

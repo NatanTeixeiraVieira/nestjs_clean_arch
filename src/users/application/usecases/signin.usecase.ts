@@ -4,7 +4,7 @@ import { User } from '@/users/domain/entities/user.entity';
 import { HashProvider } from '@/shared/application/providers/hash-provider';
 import { UserOutput, UserOutputMapper } from '../dtos/user-output';
 import { UseCase as DefaultUseCase } from '@/shared/application/usecases/use-case';
-import { InvalidCredentilsError } from '@/shared/application/errors/invalid-credentials-error';
+import { InvalidCredentialsError } from '@/shared/application/errors/invalid-credentials-error';
 
 export namespace Signin {
   export type Input = {
@@ -34,7 +34,7 @@ export namespace Signin {
       );
 
       if (!hashPasswordMatches)
-        throw new InvalidCredentilsError('Invalid credentials');
+        throw new InvalidCredentialsError('Invalid credentials');
 
       return UserOutputMapper.toOutput(entity);
     }

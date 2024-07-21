@@ -165,18 +165,14 @@ describe('UsersController e2e tests', () => {
         });
     });
 
-    // it('should return a error with 409 code when email is duplicated', async () => {
-    //   const entity = new User(UserDataBuilder({ ...signupDto }));
-    //   await repository.insert(entity);
-    //   await request(app.getHttpServer())
-    //     .post('/users')
-    //     .send(signupDto)
-    //     .expect(409)
-    //     .expect({
-    //       statusCode: 409,
-    //       error: 'Conflict',
-    //       message: 'Email addres already used',
-    //     });
-    // });
+    it('should return a error with 401 code when the request is not authorized', async () => {
+      const res = await request(app.getHttpServer())
+        .patch('/users/fakeId')
+        .expect(401)
+        .expect({
+          statusCode: 401,
+          message: 'Unauthorized',
+        });
+    });
   });
 });
